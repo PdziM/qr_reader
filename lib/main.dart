@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'core/constants/constants.dart';
 import 'domain/code_reader/repositories/qr_code_reader_repository.dart';
 import 'domain/qr_code_decripty/repositories/qr_code_decripty_repository.dart';
 import 'main_state.dart';
@@ -37,11 +38,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Flutter Demo',
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              colorScheme:
-                  ColorScheme.fromSeed(seedColor: const Color(0xFF71AEF3)),
-              useMaterial3: true,
-            ),
+            theme: lightThemeData,
             home: const QrCodeView(),
           );
         },

@@ -35,17 +35,16 @@ class QrCodeDecripty {
 
   factory QrCodeDecripty.fromMap(Map<String, dynamic> map) {
     return QrCodeDecripty(
-      position: map['position'] as int,
-      total: map['total'] as int,
-      content:
-          QrContentEncripty.fromMap(map['content'] as Map<String, dynamic>),
+      position: map['position'],
+      total: map['total'],
+      content: QrContentEncripty.fromMap(map['content']),
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory QrCodeDecripty.fromJson(String source) =>
-      QrCodeDecripty.fromMap(json.decode(source) as Map<String, dynamic>);
+      QrCodeDecripty.fromMap(json.decode(source));
 
   @override
   String toString() =>

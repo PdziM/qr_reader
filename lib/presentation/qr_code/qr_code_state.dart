@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
@@ -9,11 +10,14 @@ import '../../domain/code_reader/repositories/qr_code_reader_repository.dart';
 import '../../domain/qr_code_decripty/entities/qr_code_decripty.dart';
 import '../../domain/qr_code_decripty/repositories/qr_code_decripty_repository.dart';
 import '../../utils/functions.dart';
+import '../profile/profile_view.dart';
 
 class QrCodeState extends ChangeNotifier {
   final BuildContext context;
   String ticket = '';
   List<QrCodeDecripty> qrCodeDecriptyList = [];
+  late StreamSubscription<dynamic> subscription;
+  bool isLoading = false;
 
   QrCodeState(this.context) {
     init();
@@ -22,7 +26,12 @@ class QrCodeState extends ChangeNotifier {
   init() {}
 
   Future<void> readOneQrCode() async {
-    final res = await context.read<QrCodeReaderUsecase>().readOneQrCode();
+    isLoading = true;
+    notifyListeners();
+
+    final res = await context
+        .read<QrCodeReaderUsecase>()
+        .readOneQrCode(lineColor: "#ff6666");
 
     res.fold(Left.new, (r) {
       ticket = r.description;
@@ -32,14 +41,15 @@ class QrCodeState extends ChangeNotifier {
 
   Future<void> readMultiplesQrCodes() async {
     try {
-      FlutterBarcodeScanner.getBarcodeStreamReceiver(
+      isLoading = true;
+      notifyListeners();
+      subscription = FlutterBarcodeScanner.getBarcodeStreamReceiver(
               "#ff6666", "Cancel", false, ScanMode.QR)!
           .listen((barcode) async {
         QrCodeDecripty qrCodeDecripty = QrCodeDecripty.fromJson(barcode);
 
         if (!qrCodeDecriptyList.contains(qrCodeDecripty)) {
           qrCodeDecriptyList.add(qrCodeDecripty);
-          notifyListeners();
         }
 
         if (qrCodeDecriptyList.length == qrCodeDecripty.total) {
@@ -49,16 +59,12 @@ class QrCodeState extends ChangeNotifier {
 
           res.fold((l) {
             showCustomError(context: context, message: 'Opss.. ${l.message}');
-          }, (r) {
-            // context.read<MainState>().setSession(r);
-            // callBase();
-          });
-
-          nPrint('realizar chamada!');
-          nPrint('LIST: ${qrCodeDecriptyList}');
+          }, (r) {});
         }
       });
-      // log('TEMP LIST: ${tempList}');
+      isLoading = false;
+      notifyListeners();
+      callProfile();
     } catch (e) {
       log('ERROR: ${e.toString()}');
     }
@@ -66,5 +72,10 @@ class QrCodeState extends ChangeNotifier {
 
   void back() {
     Navigator.of(context).pop();
+  }
+
+  void callProfile() {
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const ProfileView()));
   }
 }
