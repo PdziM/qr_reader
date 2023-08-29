@@ -1,24 +1,24 @@
 import 'dart:convert';
 
-import 'qr_content_encripty.dart';
+import 'qr_content_encrypt.dart';
 
-class QrCodeDecripty {
+class QrCodeDecrypt {
   final int position;
   final int total;
-  final QrContentEncripty content;
+  final QrContentEncrypt content;
 
-  QrCodeDecripty({
+  QrCodeDecrypt({
     required this.position,
     required this.total,
     required this.content,
   });
 
-  QrCodeDecripty copyWith({
+  QrCodeDecrypt copyWith({
     int? position,
     int? total,
-    QrContentEncripty? content,
+    QrContentEncrypt? content,
   }) {
-    return QrCodeDecripty(
+    return QrCodeDecrypt(
       position: position ?? this.position,
       total: total ?? this.total,
       content: content ?? this.content,
@@ -33,25 +33,25 @@ class QrCodeDecripty {
     };
   }
 
-  factory QrCodeDecripty.fromMap(Map<String, dynamic> map) {
-    return QrCodeDecripty(
-      position: map['position'],
-      total: map['total'],
-      content: QrContentEncripty.fromMap(map['content']),
+  factory QrCodeDecrypt.fromMap(Map<String, dynamic> map) {
+    return QrCodeDecrypt(
+      position: map['position'] as int,
+      total: map['total'] as int,
+      content: QrContentEncrypt.fromMap(map['content'] as Map<String, dynamic>),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory QrCodeDecripty.fromJson(String source) =>
-      QrCodeDecripty.fromMap(json.decode(source));
+  factory QrCodeDecrypt.fromJson(String source) =>
+      QrCodeDecrypt.fromMap(jsonDecode(source));
 
   @override
   String toString() =>
-      'CodeDecripty(position: $position, total: $total, content: $content)';
+      'QrCodeDecripty(position: $position, total: $total, content: $content)';
 
   @override
-  bool operator ==(covariant QrCodeDecripty other) {
+  bool operator ==(covariant QrCodeDecrypt other) {
     if (identical(this, other)) return true;
 
     return other.position == position &&

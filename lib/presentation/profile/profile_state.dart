@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/qr_code_decripty/entities/customer_profile.dart';
-import '../../domain/qr_code_decripty/entities/driver/driver.dart';
-import '../../domain/qr_code_decripty/entities/driver/driver_address.dart';
-import '../../domain/qr_code_decripty/entities/driver/driver_cnh.dart';
-import '../../domain/qr_code_decripty/entities/driver/driver_crlv_dto.dart';
+import '../../domain/qr_code_decrypt/entities/customer_profile.dart';
+import '../../domain/qr_code_decrypt/entities/driver/driver.dart';
+import '../../domain/qr_code_decrypt/entities/driver/driver_address.dart';
+import '../../domain/qr_code_decrypt/entities/driver/driver_cnh.dart';
+import '../../domain/qr_code_decrypt/entities/driver/driver_crlv_dto.dart';
+import '../qr_code/qr_code_view.dart';
 
 class ProfileState extends ChangeNotifier {
   final BuildContext context;
@@ -55,4 +56,9 @@ class ProfileState extends ChangeNotifier {
       fuel: 'Gasolina',
     ),
   );
+
+  void callQrCodeView() {
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const QrCodeView()));
+  }
 }

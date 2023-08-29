@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'core/constants/constants.dart';
 import 'domain/code_reader/repositories/qr_code_reader_repository.dart';
-import 'domain/qr_code_decripty/repositories/qr_code_decripty_repository.dart';
+import 'domain/qr_code_decrypt/repositories/qr_code_decrypt_repository.dart';
 import 'main_state.dart';
 import 'presentation/qr_code/qr_code_view.dart';
 import 'repositories/code_reader.dart';
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         //USE CASES
         Provider<QrCodeReaderUsecase>(
             create: (_) => Config.qrCodeReaderUsecase),
-        Provider<QrCodeDecriptyUsecase>(
+        Provider<QrCodeDecryptUsecase>(
             create: (_) => Config.qrCodeDecriptyUsecase),
         //SINGLETON
         ListenableProvider<MainState>(create: (_) => MainState(context))

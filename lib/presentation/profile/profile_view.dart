@@ -19,6 +19,10 @@ class ProfileView extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               backgroundColor: const Color(0xFF71AEF3),
+              leading: IconButton(
+                icon: const Icon(PhosphorIcons.arrow_left_bold),
+                onPressed: state.callQrCodeView,
+              ),
             ),
             body: SingleChildScrollView(
               child: Column(

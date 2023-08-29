@@ -7,15 +7,15 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/code_reader/repositories/qr_code_reader_repository.dart';
-import '../../domain/qr_code_decripty/entities/qr_code_decripty.dart';
-import '../../domain/qr_code_decripty/repositories/qr_code_decripty_repository.dart';
+import '../../domain/qr_code_decrypt/entities/qr_code_decrypt.dart';
+import '../../domain/qr_code_decrypt/repositories/qr_code_decrypt_repository.dart';
 import '../../utils/functions.dart';
 import '../profile/profile_view.dart';
 
 class QrCodeState extends ChangeNotifier {
   final BuildContext context;
   String ticket = '';
-  List<QrCodeDecripty> qrCodeDecriptyList = [];
+  List<QrCodeDecrypt> qrCodeDecriptyList = [];
   late StreamSubscription<dynamic> subscription;
   bool isLoading = false;
 
@@ -46,25 +46,29 @@ class QrCodeState extends ChangeNotifier {
       subscription = FlutterBarcodeScanner.getBarcodeStreamReceiver(
               "#ff6666", "Cancel", false, ScanMode.QR)!
           .listen((barcode) async {
-        QrCodeDecripty qrCodeDecripty = QrCodeDecripty.fromJson(barcode);
+        QrCodeDecrypt qrCodeDecripty = QrCodeDecrypt.fromJson(barcode);
 
         if (!qrCodeDecriptyList.contains(qrCodeDecripty)) {
           qrCodeDecriptyList.add(qrCodeDecripty);
+          nPrint('BARCODE: $barcode');
         }
 
         if (qrCodeDecriptyList.length == qrCodeDecripty.total) {
           final res = await context
-              .read<QrCodeDecriptyUsecase>()
+              .read<QrCodeDecryptUsecase>()
               .decriptyQrCode(qrCodeDecriptyList: qrCodeDecriptyList);
 
           res.fold((l) {
             showCustomError(context: context, message: 'Opss.. ${l.message}');
-          }, (r) {});
+            // callProfile();
+          }, (r) {
+            callProfile();
+          });
         }
       });
+
       isLoading = false;
       notifyListeners();
-      callProfile();
     } catch (e) {
       log('ERROR: ${e.toString()}');
     }

@@ -1,19 +1,19 @@
 import 'dart:convert';
 
-class QrContentEncripty {
+class QrContentEncrypt {
   final String iv;
   final String content;
 
-  QrContentEncripty({
+  QrContentEncrypt({
     required this.iv,
     required this.content,
   });
 
-  QrContentEncripty copyWith({
+  QrContentEncrypt copyWith({
     String? iv,
     String? content,
   }) {
-    return QrContentEncripty(
+    return QrContentEncrypt(
       iv: iv ?? this.iv,
       content: content ?? this.content,
     );
@@ -26,8 +26,8 @@ class QrContentEncripty {
     };
   }
 
-  factory QrContentEncripty.fromMap(Map<String, dynamic> map) {
-    return QrContentEncripty(
+  factory QrContentEncrypt.fromMap(Map<String, dynamic> map) {
+    return QrContentEncrypt(
       iv: map['iv'] as String,
       content: map['content'] as String,
     );
@@ -35,14 +35,14 @@ class QrContentEncripty {
 
   String toJson() => json.encode(toMap());
 
-  factory QrContentEncripty.fromJson(String source) =>
-      QrContentEncripty.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory QrContentEncrypt.fromJson(String source) =>
+      QrContentEncrypt.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() => 'ContentDecripty(iv: $iv, content: $content)';
 
   @override
-  bool operator ==(covariant QrContentEncripty other) {
+  bool operator ==(covariant QrContentEncrypt other) {
     if (identical(this, other)) return true;
 
     return other.iv == iv && other.content == content;
