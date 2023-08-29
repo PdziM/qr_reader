@@ -53,8 +53,8 @@ class DriverAddress {
       'district': district,
       'city': city,
       'state': state,
-      'zipCode': zipCode,
-      'driId': driId,
+      'zip_code': zipCode,
+      'dri_id': driId,
     };
   }
 
@@ -66,8 +66,8 @@ class DriverAddress {
       district: map['district'] as String,
       city: map['city'] as String,
       state: map['state'] as String,
-      zipCode: map['zipCode'] as String,
-      driId: map['driId'] as String,
+      zipCode: map['zip_code'] as String,
+      driId: map['dri_id'] as String,
     );
   }
 

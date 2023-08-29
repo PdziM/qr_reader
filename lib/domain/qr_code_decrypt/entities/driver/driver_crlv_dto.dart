@@ -49,10 +49,10 @@ class DriverCrlv {
     return <String, dynamic>{
       'renavam': renavam,
       'chassi': chassi,
-      'manufactureYear': manufactureYear,
+      'manufacture_year': manufactureYear,
       'plate': plate,
-      'driId': driId,
-      'modelYear': modelYear,
+      'dri_id': driId,
+      'model_year': modelYear,
       'color': color,
       'fuel': fuel,
     };
@@ -62,10 +62,10 @@ class DriverCrlv {
     return DriverCrlv(
       renavam: map['renavam'] as String,
       chassi: map['chassi'] as String,
-      manufactureYear: map['manufactureYear'] as String,
+      manufactureYear: map['manufacture_year'] as String,
       plate: map['plate'] as String,
-      driId: map['driId'] as String,
-      modelYear: map['modelYear'] as String,
+      driId: map['dri_id'] as String,
+      modelYear: map['model_year'] as String,
       color: map['color'] as String,
       fuel: map['fuel'] as String,
     );

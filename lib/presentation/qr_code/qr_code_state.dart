@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../domain/code_reader/repositories/qr_code_reader_repository.dart';
 import '../../domain/qr_code_decrypt/entities/qr_code_decrypt.dart';
-import '../../domain/qr_code_decrypt/repositories/qr_code_decrypt_repository.dart';
+import '../../repositories/mock/qr_code_decrypt_mock_api.dart';
 import '../../utils/functions.dart';
 import '../profile/profile_view.dart';
 
@@ -54,16 +54,21 @@ class QrCodeState extends ChangeNotifier {
         }
 
         if (qrCodeDecriptyList.length == qrCodeDecripty.total) {
-          final res = await context
-              .read<QrCodeDecryptUsecase>()
-              .decriptyQrCode(qrCodeDecriptyList: qrCodeDecriptyList);
-
-          res.fold((l) {
-            showCustomError(context: context, message: 'Opss.. ${l.message}');
-            // callProfile();
-          }, (r) {
-            callProfile();
+          final mock = newQrCodeDecryptMockApi();
+          mock.decryptQrCode(qrCodeDecripty: qrCodeDecriptyList).then((value) {
+            nPrint('VALUE: $value');
           });
+
+          // final res = await context
+          //     .read<QrCodeDecryptUsecase>()
+          //     .decriptyQrCode(qrCodeDecriptyList: qrCodeDecriptyList);
+
+          // res.fold((l) {
+          //   showCustomError(context: context, message: 'Opss.. ${l.message}');
+          //   // callProfile();
+          // }, (r) {
+          //   callProfile();
+          // });
         }
       });
 

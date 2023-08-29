@@ -52,12 +52,12 @@ class Driver {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,
-      'cpfDocument': cpfDocument,
+      'cpf_document': cpfDocument,
       'moment': moment,
-      'selfieUrl': selfieUrl,
-      'usrId': usrId,
-      'cmpId': cmpId,
-      'qrCode': qrCode,
+      'selfie_url': selfieUrl,
+      'usr_id': usrId,
+      'cmp_id': cmpId,
+      'qr_code': qrCode,
       'score': score,
       'active': active,
     };
@@ -66,12 +66,12 @@ class Driver {
   factory Driver.fromMap(Map<String, dynamic> map) {
     return Driver(
       name: map['name'] as String,
-      cpfDocument: map['cpfDocument'] as String,
+      cpfDocument: map['cpf_document'] as String,
       moment: map['moment'] as String,
-      selfieUrl: map['selfieUrl'] as String,
-      usrId: map['usrId'] as String,
-      cmpId: map['cmpId'] as String,
-      qrCode: map['qrCode'] as String,
+      selfieUrl: map['selfie_url'] as String,
+      usrId: map['usr_id'] as String,
+      cmpId: map['cmp_id'] as String,
+      qrCode: map['qr_code'] as String,
       score: map['score'] as String,
       active: map['active'] as String,
     );

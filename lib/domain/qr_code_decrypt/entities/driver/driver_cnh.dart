@@ -47,27 +47,27 @@ class DriverCnh {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'cnhDocument': cnhDocument,
-      'rgDocument': rgDocument,
-      'firstLicense': firstLicense,
+      'cnh_document': cnhDocument,
+      'rg_document': rgDocument,
+      'first_license': firstLicense,
       'validity': validity,
-      'issueDate': issueDate,
+      'issue_date': issueDate,
       'category': category,
-      'driId': driId,
-      'birthDate': birthDate,
+      'dri_id': driId,
+      'birth_date': birthDate,
     };
   }
 
   factory DriverCnh.fromMap(Map<String, dynamic> map) {
     return DriverCnh(
-      cnhDocument: map['cnhDocument'] as String,
-      rgDocument: map['rgDocument'] as String,
-      firstLicense: map['firstLicense'] as String,
+      cnhDocument: map['cnh_document'] as String,
+      rgDocument: map['rg_document'] as String,
+      firstLicense: map['first_license'] as String,
       validity: map['validity'] as String,
-      issueDate: map['issueDate'] as String,
+      issueDate: map['issue_date'] as String,
       category: map['category'] as String,
-      driId: map['driId'] as String,
-      birthDate: map['birthDate'] as String,
+      driId: map['dri_id'] as String,
+      birthDate: map['birth_date'] as String,
     );
   }
 

@@ -28,15 +28,15 @@ class QrContentEncrypt {
 
   factory QrContentEncrypt.fromMap(Map<String, dynamic> map) {
     return QrContentEncrypt(
-      iv: map['iv'] as String,
-      content: map['content'] as String,
+      iv: map['iv'],
+      content: map['content'],
     );
   }
 
-  String toJson() => json.encode(toMap());
+  String toJson() => jsonEncode(toMap());
 
   factory QrContentEncrypt.fromJson(String source) =>
-      QrContentEncrypt.fromMap(json.decode(source) as Map<String, dynamic>);
+      QrContentEncrypt.fromMap(jsonDecode(source));
 
   @override
   String toString() => 'ContentDecripty(iv: $iv, content: $content)';
