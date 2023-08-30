@@ -11,7 +11,7 @@ import '../service.dart';
 CodeReaderService newCodeReaderService() => _CodeReaderService();
 
 class _CodeReaderService extends CodeReaderService {
-  late StreamSubscription<dynamic> _subscription;
+  StreamSubscription<dynamic>? _subscription;
   List<QrCodeDecrypt> qrCodeDecriptyList = [];
   bool isLoading = false;
 
@@ -77,7 +77,7 @@ class _CodeReaderService extends CodeReaderService {
 
   @override
   Future<Either<Exception, bool>> stopScan() async {
-    await _subscription.cancel();
+    await _subscription!.cancel();
     return const Right(true);
   }
 }
