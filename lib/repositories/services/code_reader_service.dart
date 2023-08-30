@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:read_qrcode/domain/objects/custom_exception.dart';
 import 'package:read_qrcode/utils/functions.dart';
@@ -62,6 +63,7 @@ class _CodeReaderService extends CodeReaderService {
 
         if (qrCodeDecriptyList.length == qrCodeDecripty.total) {
           // stopScan();
+          finishBarcodeReaderActivity();
           count++;
           nPrint('IN STREAM $count');
         }
@@ -79,5 +81,17 @@ class _CodeReaderService extends CodeReaderService {
   Future<Either<Exception, bool>> stopScan() async {
     await _subscription!.cancel();
     return const Right(true);
+  }
+
+  Future<void> finishBarcodeReaderActivity() async {
+    const platform = MethodChannel('com.example/channel');
+
+    try {
+      await platform.invokeMethod('readMultiplesQrCodes');
+    } on PlatformException catch (e) {
+      nPrint('ERROR: exitRunningActivity => $e');
+    } catch (e) {
+      nPrint('ERROR: exitRunningActivity => $e');
+    }
   }
 }
