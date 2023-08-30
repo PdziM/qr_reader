@@ -48,16 +48,16 @@ class QrCodeDecrypt {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['position'] = position;
-    data['total'] = total;
-    data['content'] = content.toJson();
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = <String, dynamic>{};
+  //   data['position'] = position;
+  //   data['total'] = total;
+  //   data['content'] = content.toJson();
 
-    return data;
-  }
+  //   return data;
+  // }
 
-  // String toJson() => jsonEncode(toMap());
+  String toJson() => jsonEncode(toMap());
 
   factory QrCodeDecrypt.fromJson(String source) =>
       QrCodeDecrypt.fromMap(jsonDecode(source));

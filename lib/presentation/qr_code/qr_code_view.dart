@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:provider/provider.dart';
+import 'package:read_qrcode/utils/functions.dart';
 
+import '../../main_state.dart';
 import 'qr_code_state.dart';
 
 class QrCodeView extends StatelessWidget {
@@ -9,6 +11,9 @@ class QrCodeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ValueNotifier<ThemeMode> themeNotifier =
+        context.read<MainState>().themeNotifier;
+
     return ChangeNotifierProvider(
       create: (_) => QrCodeState(context),
       child: Consumer<QrCodeState>(
@@ -17,6 +22,21 @@ class QrCodeView extends StatelessWidget {
             appBar: AppBar(
               backgroundColor: Theme.of(context).colorScheme.inversePrimary,
               title: const Text('Reader QRCODE'),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    nPrint(themeNotifier.value);
+                    themeNotifier.value = themeNotifier.value == ThemeMode.light
+                        ? context.read<MainState>().setThemeMode(ThemeMode.dark)
+                        : context
+                            .read<MainState>()
+                            .setThemeMode(ThemeMode.light);
+                  },
+                  icon: themeNotifier.value == ThemeMode.dark
+                      ? const Icon(PhosphorIcons.moon_bold)
+                      : const Icon(PhosphorIcons.sun_bold),
+                ),
+              ],
             ),
             body: Center(
               child: Column(

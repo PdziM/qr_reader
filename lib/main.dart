@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'core/constants/constants.dart';
 import 'domain/code_reader/repositories/qr_code_reader_repository.dart';
 import 'domain/qr_code_decrypt/repositories/qr_code_decrypt_repository.dart';
 import 'main_state.dart';
@@ -9,6 +8,7 @@ import 'presentation/qr_code/qr_code_view.dart';
 import 'repositories/code_reader.dart';
 import 'repositories/service.dart';
 import 'utils/config.dart';
+import 'utils/theme_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,6 +21,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        //THEME
+        ListenableProvider<ThemeProvider>(create: (_) => ThemeProvider()),
         //SERVICES
         Provider<HttpClientService>(create: (_) => Config.httpClientService),
         Provider<CodeReaderService>(create: (_) => Config.qrCodeService),
@@ -38,7 +40,9 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Flutter Demo',
             debugShowCheckedModeBanner: false,
-            theme: lightThemeData,
+            theme: Provider.of<ThemeProvider>(context).currentTheme,
+            // darkTheme: darkThemeData,
+            // themeMode: state.themeMode,
             home: const QrCodeView(),
           );
         },

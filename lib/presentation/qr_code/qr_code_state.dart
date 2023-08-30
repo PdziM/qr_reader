@@ -18,6 +18,7 @@ class QrCodeState extends ChangeNotifier {
   List<QrCodeDecrypt> qrCodeDecriptyList = [];
   late StreamSubscription<dynamic> subscription;
   bool isLoading = false;
+  bool darkTheme = false;
 
   QrCodeState(this.context) {
     init();
@@ -57,6 +58,12 @@ class QrCodeState extends ChangeNotifier {
           final mock = newQrCodeDecryptMockApi();
           mock.decryptQrCode(qrCodeDecripty: qrCodeDecriptyList).then((value) {
             nPrint('VALUE: $value');
+
+            value.fold(
+                (l) => showCustomError(
+                    context: context, message: 'Opss.. ${l.message}'), (r) {
+              callProfile();
+            });
           });
 
           // final res = await context
