@@ -60,7 +60,7 @@ class QrCodeState extends ChangeNotifier {
           back();
         }, (r) {
           nPrint('readMultiplesQrCodes: ${r.toMap()}');
-          callProfile(customerProfile: r);
+          // callProfile(customerProfile: r);
         });
       });
 

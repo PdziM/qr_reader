@@ -45,6 +45,7 @@ class _CodeReaderService extends CodeReaderService {
       String? lineColor,
       String? cancelButtonTitle,
       bool? flashOn}) async {
+    int count = 0;
     try {
       _subscription = FlutterBarcodeScanner.getBarcodeStreamReceiver(
               lineColor ?? "#ff6666",
@@ -61,8 +62,12 @@ class _CodeReaderService extends CodeReaderService {
 
         if (qrCodeDecriptyList.length == qrCodeDecripty.total) {
           // stopScan();
+          count++;
+          nPrint('IN STREAM $count');
         }
       });
+
+      nPrint('OUT STREAM');
       return Right(qrCodeDecriptyList);
     } catch (e) {
       stopScan();
