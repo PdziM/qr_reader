@@ -8,17 +8,17 @@ class DriverDto {
   final String usrId;
   final String cmpId;
   final String qrCode;
-  final String score;
-  final String active;
+  final int score;
+  final bool active;
 
   DriverDto.fromJson(json)
       : name = json[TbDriver.name],
-        cpfDocument = json[TbDriver.cpfDocument],
-        moment = json[TbDriver.moment],
-        selfieUrl = json[TbDriver.selfieUrl],
-        usrId = json[TbDriver.usrId],
-        cmpId = json[TbDriver.cmpId],
-        qrCode = json[TbDriver.qrCode],
-        score = json[TbDriver.score],
-        active = json[TbDriver.active];
+        cpfDocument = json[TbDriver.cpfDocument] ?? '',
+        moment = json[TbDriver.moment] ?? '',
+        selfieUrl = json[TbDriver.selfieUrl] ?? '',
+        usrId = json[TbDriver.usrId] ?? '',
+        cmpId = json[TbDriver.cmpId] ?? '',
+        qrCode = json[TbDriver.qrCode] ?? '',
+        score = json[TbDriver.score] ?? '',
+        active = json[TbDriver.active] ?? '';
 }

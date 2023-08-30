@@ -11,12 +11,12 @@ class DriverCrlvDto {
   final String fuel;
 
   DriverCrlvDto.fromJson(json)
-      : renavam = json[TbDriverCrlv.renavam],
+      : renavam = json[TbDriverCrlv.renavam] ?? '',
         chassi = json[TbDriverCrlv.chassi],
-        manufactureYear = json[TbDriverCrlv.manufactureYear],
-        plate = json[TbDriverCrlv.plate],
-        driId = json[TbDriverCrlv.driId],
-        modelYear = json[TbDriverCrlv.modelYear],
-        color = json[TbDriverCrlv.color],
-        fuel = json[TbDriverCrlv.fuel];
+        manufactureYear = json[TbDriverCrlv.manufactureYear] ?? '',
+        plate = json[TbDriverCrlv.plate] ?? '',
+        driId = json[TbDriverCrlv.driId] ?? '',
+        modelYear = json[TbDriverCrlv.modelYear] ?? '',
+        color = json[TbDriverCrlv.color] ?? '',
+        fuel = json[TbDriverCrlv.fuel] ?? '';
 }

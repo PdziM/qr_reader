@@ -10,8 +10,8 @@ class Driver {
   final String usrId;
   final String cmpId;
   final String qrCode;
-  final String score;
-  final String active;
+  final int score;
+  final bool active;
 
   Driver({
     required this.name,
@@ -33,8 +33,8 @@ class Driver {
     String? usrId,
     String? cmpId,
     String? qrCode,
-    String? score,
-    String? active,
+    int? score,
+    bool? active,
   }) {
     return Driver(
       name: name ?? this.name,
@@ -72,8 +72,8 @@ class Driver {
       usrId: map['usr_id'] as String,
       cmpId: map['cmp_id'] as String,
       qrCode: map['qr_code'] as String,
-      score: map['score'] as String,
-      active: map['active'] as String,
+      score: map['score'] as int,
+      active: map['active'] as bool,
     );
   }
 

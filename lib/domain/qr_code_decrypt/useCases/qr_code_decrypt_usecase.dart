@@ -18,7 +18,6 @@ class _QrCodeDecriptyUsecase extends QrCodeDecryptUsecase {
   Future<Either<CustomException, CustomerProfile>> decriptyQrCode(
       {required List<QrCodeDecrypt> qrCodeDecriptyList}) async {
     final res = await _api.decryptQrCode(qrCodeDecripty: qrCodeDecriptyList);
-
     return res.fold((l) => Left(l), (r) async {
       return Right(CustomerProfile.fromDto(r));
     });

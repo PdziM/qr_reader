@@ -11,12 +11,12 @@ class DriverCnhDto {
   final String birthDate;
 
   DriverCnhDto.fromJson(json)
-      : cnhDocument = json[TbDriverCnh.cnhDocument],
-        rgDocument = json[TbDriverCnh.rgDocument],
-        firstLicense = json[TbDriverCnh.firstLicense],
-        validity = json[TbDriverCnh.validity],
-        issueDate = json[TbDriverCnh.issueDate],
-        category = json[TbDriverCnh.category],
-        driId = json[TbDriverCnh.driId],
-        birthDate = json[TbDriverCnh.birthDate];
+      : cnhDocument = json[TbDriverCnh.cnhDocument] ?? '',
+        rgDocument = json[TbDriverCnh.rgDocument] ?? '',
+        firstLicense = json[TbDriverCnh.firstLicense] ?? '',
+        validity = json[TbDriverCnh.validity] ?? '',
+        issueDate = json[TbDriverCnh.issueDate] ?? '',
+        category = json[TbDriverCnh.category] ?? '',
+        driId = json[TbDriverCnh.driId] ?? '',
+        birthDate = json[TbDriverCnh.birthDate] ?? '';
 }

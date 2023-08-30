@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:provider/provider.dart';
 
+import '../../domain/qr_code_decrypt/entities/customer_profile.dart';
 import '../../shared/buttons/custom_button_text.dart';
 import 'components/title_and_subtitle.dart';
 import 'profile_state.dart';
 
 class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
+  final CustomerProfile customerProfile;
+
+  const ProfileView({super.key, required this.customerProfile});
 
   @override
   Widget build(BuildContext context) {
@@ -49,14 +52,14 @@ class ProfileView extends StatelessWidget {
                       image: DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(
-                          state.customerProfile.driver.selfieUrl,
+                          customerProfile.driver.selfieUrl,
                         ),
                       ),
                     ),
                   ),
                   TitleAndSubtitle(
                     title: 'Nome',
-                    subTitle: state.customerProfile.driver.name,
+                    subTitle: customerProfile.driver.name,
                   ),
                   Row(
                     children: [
@@ -64,13 +67,13 @@ class ProfileView extends StatelessWidget {
                         child: TitleAndSubtitle(
                           title: 'CPF',
                           subTitle: UtilBrasilFields.obterCpf(
-                              state.customerProfile.driver.cpfDocument),
+                              customerProfile.driver.cpfDocument),
                         ),
                       ),
                       Expanded(
                         child: TitleAndSubtitle(
                           title: 'Pontuação',
-                          subTitle: state.customerProfile.driver.score,
+                          subTitle: customerProfile.driver.score.toString(),
                         ),
                       ),
                     ],
@@ -80,7 +83,7 @@ class ProfileView extends StatelessWidget {
                       Expanded(
                         child: TitleAndSubtitle(
                           title: 'Telefone',
-                          // subTitle: state.customerProfile.driver.,
+                          // subTitle: customerProfile.driver.,
                           subTitle:
                               UtilBrasilFields.obterTelefone('17992117181'),
                         ),
@@ -88,7 +91,7 @@ class ProfileView extends StatelessWidget {
                       Expanded(
                         child: TitleAndSubtitle(
                           title: 'CNH',
-                          subTitle: state.customerProfile.driverCnh.cnhDocument,
+                          subTitle: customerProfile.driverCnh.cnhDocument,
                         ),
                       ),
                     ],
@@ -98,13 +101,13 @@ class ProfileView extends StatelessWidget {
                       Expanded(
                         child: TitleAndSubtitle(
                           title: 'Cidade',
-                          subTitle: state.customerProfile.driverAddress.city,
+                          subTitle: customerProfile.driverAddress.city,
                         ),
                       ),
                       Expanded(
                         child: TitleAndSubtitle(
                           title: 'Estado',
-                          subTitle: state.customerProfile.driverAddress.state,
+                          subTitle: customerProfile.driverAddress.state,
                         ),
                       ),
                     ],

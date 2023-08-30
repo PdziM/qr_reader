@@ -11,12 +11,12 @@ class DriverAddressDto {
   final String driId;
 
   DriverAddressDto.fromJson(json)
-      : street = json[TbDriverAddress.street],
-        number = json[TbDriverAddress.number],
-        complement = json[TbDriverAddress.complement],
-        district = json[TbDriverAddress.district],
-        city = json[TbDriverAddress.city],
-        state = json[TbDriverAddress.state],
-        zipCode = json[TbDriverAddress.zipCode],
-        driId = json[TbDriverAddress.driId];
+      : street = json[TbDriverAddress.street] ?? '',
+        number = json[TbDriverAddress.number] ?? '',
+        complement = json[TbDriverAddress.complement] ?? '',
+        district = json[TbDriverAddress.district] ?? '',
+        city = json[TbDriverAddress.city] ?? '',
+        state = json[TbDriverAddress.state] ?? '',
+        zipCode = json[TbDriverAddress.zipCode] ?? '',
+        driId = json[TbDriverAddress.driId] ?? '';
 }

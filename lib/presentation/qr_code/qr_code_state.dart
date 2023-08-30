@@ -7,8 +7,9 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/code_reader/repositories/qr_code_reader_repository.dart';
+import '../../domain/qr_code_decrypt/entities/customer_profile.dart';
 import '../../domain/qr_code_decrypt/entities/qr_code_decrypt.dart';
-import '../../repositories/mock/qr_code_decrypt_mock_api.dart';
+import '../../domain/qr_code_decrypt/repositories/qr_code_decrypt_repository.dart';
 import '../../utils/functions.dart';
 import '../profile/profile_view.dart';
 
@@ -55,27 +56,18 @@ class QrCodeState extends ChangeNotifier {
         }
 
         if (qrCodeDecriptyList.length == qrCodeDecripty.total) {
-          final mock = newQrCodeDecryptMockApi();
-          mock.decryptQrCode(qrCodeDecripty: qrCodeDecriptyList).then((value) {
-            nPrint('VALUE: $value');
+          final res = await context
+              .read<QrCodeDecryptUsecase>()
+              .decriptyQrCode(qrCodeDecriptyList: qrCodeDecriptyList);
 
-            value.fold(
-                (l) => showCustomError(
-                    context: context, message: 'Opss.. ${l.message}'), (r) {
-              callProfile();
-            });
+          res.fold((l) {
+            showCustomError(context: context, message: 'Opss.. ${l.message}');
+            back();
+          }, (r) {
+            nPrint('readMultiplesQrCodes: ${r.toMap()}');
+            callProfile(customerProfile: r);
+            // subscription.cancel();
           });
-
-          // final res = await context
-          //     .read<QrCodeDecryptUsecase>()
-          //     .decriptyQrCode(qrCodeDecriptyList: qrCodeDecriptyList);
-
-          // res.fold((l) {
-          //   showCustomError(context: context, message: 'Opss.. ${l.message}');
-          //   // callProfile();
-          // }, (r) {
-          //   callProfile();
-          // });
         }
       });
 
@@ -90,8 +82,11 @@ class QrCodeState extends ChangeNotifier {
     Navigator.of(context).pop();
   }
 
-  void callProfile() {
+  void callProfile({required CustomerProfile customerProfile}) {
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const ProfileView()));
+      MaterialPageRoute(
+        builder: (context) => ProfileView(customerProfile: customerProfile),
+      ),
+    );
   }
 }
