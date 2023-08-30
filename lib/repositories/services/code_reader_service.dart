@@ -13,8 +13,8 @@ CodeReaderService newCodeReaderService() => _CodeReaderService();
 class _CodeReaderService extends CodeReaderService {
   late StreamSubscription<dynamic> _subscription;
   List<QrCodeDecrypt> qrCodeDecriptyList = [];
-
   bool isLoading = false;
+
   @override
   Future<Either<CustomException, String>> readOneQrCode(
       {required ScanMode scanMode,
@@ -65,7 +65,7 @@ class _CodeReaderService extends CodeReaderService {
       });
       return Right(qrCodeDecriptyList);
     } catch (e) {
-      _subscription.cancel();
+      stopScan();
       return Left(CustomException(message: e.toString()));
     }
   }

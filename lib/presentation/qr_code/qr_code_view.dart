@@ -20,8 +20,11 @@ class QrCodeView extends StatelessWidget {
         builder: (_, state, __) {
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-              title: const Text('Reader QRCODE'),
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              title: const Text(
+                'Reader QRCODE',
+                style: TextStyle(color: Colors.white),
+              ),
               actions: [
                 IconButton(
                   onPressed: () {
@@ -33,8 +36,14 @@ class QrCodeView extends StatelessWidget {
                             .setThemeMode(ThemeMode.light);
                   },
                   icon: themeNotifier.value == ThemeMode.dark
-                      ? const Icon(PhosphorIcons.moon_bold)
-                      : const Icon(PhosphorIcons.sun_bold),
+                      ? const Icon(
+                          PhosphorIcons.moon_bold,
+                          color: Colors.white,
+                        )
+                      : const Icon(
+                          PhosphorIcons.sun_bold,
+                          color: Colors.white,
+                        ),
                 ),
               ],
             ),
@@ -57,9 +66,13 @@ class QrCodeView extends StatelessWidget {
               ),
             ),
             floatingActionButton: FloatingActionButton(
+              backgroundColor: Theme.of(context).colorScheme.primary,
               onPressed: state.readMultiplesQrCodes,
               tooltip: 'Read QrCode',
-              child: const Icon(PhosphorIcons.qr_code_bold),
+              child: const Icon(
+                PhosphorIcons.qr_code_bold,
+                color: Colors.white,
+              ),
             ), // This trailing comma makes auto-formatting nicer for build methods.
           );
         },
