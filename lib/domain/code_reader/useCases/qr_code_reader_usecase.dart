@@ -3,6 +3,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 import '../../../repositories/code_reader.dart';
 import '../../objects/custom_exception.dart';
+import '../../qr_code_decrypt/entities/qr_code_decrypt.dart';
 import '../entities/code.dart';
 import '../repositories/qr_code_reader_repository.dart';
 
@@ -26,7 +27,7 @@ class _QrCodeReaderUsecase extends QrCodeReaderUsecase {
   }
 
   @override
-  Future<Either<CustomException, List<Code>>> readMultiplesQrCodes(
+  Future<Either<CustomException, List<QrCodeDecrypt>>> readMultiplesQrCodes(
       {String? lineColor, String? cancelButtonTitle, bool? flashOn}) async {
     final res = await _qrCodeReader.readMultiplesQrCodes(
         scanMode: ScanMode.QR,
@@ -34,11 +35,7 @@ class _QrCodeReaderUsecase extends QrCodeReaderUsecase {
         cancelButtonTitle: cancelButtonTitle,
         flashOn: flashOn);
     return res.fold(Left.new, (r) {
-      List<Code> list = [];
-      for (var element in r) {
-        list.add(Code(description: element));
-      }
-      return Right(list);
+      return Right(r);
     });
   }
 }

@@ -3,13 +3,11 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/code_reader/repositories/qr_code_reader_repository.dart';
 import '../../domain/qr_code_decrypt/entities/customer_profile.dart';
 import '../../domain/qr_code_decrypt/entities/qr_code_decrypt.dart';
-import '../../domain/qr_code_decrypt/repositories/qr_code_decrypt_repository.dart';
 import '../../utils/functions.dart';
 import '../profile/profile_view.dart';
 
@@ -19,7 +17,6 @@ class QrCodeState extends ChangeNotifier {
   List<QrCodeDecrypt> qrCodeDecriptyList = [];
   late StreamSubscription<dynamic> subscription;
   bool isLoading = false;
-  bool darkTheme = false;
 
   QrCodeState(this.context) {
     init();
@@ -41,34 +38,37 @@ class QrCodeState extends ChangeNotifier {
     });
   }
 
+  // test() {
+  //   subscription = FlutterBarcodeScanner.getBarcodeStreamReceiver(
+  //           "#ff6666", "Cancel", false, ScanMode.QR)!
+  //       .listen((barcode) {
+  //     QrCodeDecrypt qrCodeDecripty = QrCodeDecrypt.fromJson(barcode);
+
+  //     if (qrCodeDecriptyList.length != qrCodeDecripty.total) {
+  //       if (!qrCodeDecriptyList.contains(qrCodeDecripty)) {
+  //         qrCodeDecriptyList.add(qrCodeDecripty);
+  //         nPrint('BARCODE: $barcode');
+  //       }
+  //     }
+  //   });
+  //   back();
+  // }
+
   Future<void> readMultiplesQrCodes() async {
     try {
       isLoading = true;
       notifyListeners();
-      subscription = FlutterBarcodeScanner.getBarcodeStreamReceiver(
-              "#ff6666", "Cancel", false, ScanMode.QR)!
-          .listen((barcode) async {
-        QrCodeDecrypt qrCodeDecripty = QrCodeDecrypt.fromJson(barcode);
 
-        if (!qrCodeDecriptyList.contains(qrCodeDecripty)) {
-          qrCodeDecriptyList.add(qrCodeDecripty);
-          nPrint('BARCODE: $barcode');
-        }
+      final res =
+          await context.read<QrCodeReaderUsecase>().readMultiplesQrCodes();
 
-        if (qrCodeDecriptyList.length == qrCodeDecripty.total) {
-          final res = await context
-              .read<QrCodeDecryptUsecase>()
-              .decriptyQrCode(qrCodeDecriptyList: qrCodeDecriptyList);
-
-          res.fold((l) {
-            showCustomError(context: context, message: 'Opss.. ${l.message}');
-            back();
-          }, (r) {
-            nPrint('readMultiplesQrCodes: ${r.toMap()}');
-            callProfile(customerProfile: r);
-            // subscription.cancel();
-          });
-        }
+      res.fold((l) {
+        showCustomError(context: context, message: 'Opss.. ${l.message}');
+        back();
+      }, (r) {
+        // qrCodeDecriptyList = r;
+        // nPrint(qrCodeDecriptyList);
+        // back();
       });
 
       isLoading = false;
@@ -77,6 +77,21 @@ class QrCodeState extends ChangeNotifier {
       log('ERROR: ${e.toString()}');
     }
   }
+
+  //   if (qrCodeDecriptyList.length == 18) {
+  //   final res = await context
+  //       .read<QrCodeDecryptUsecase>()
+  //       .decriptyQrCode(qrCodeDecriptyList: qrCodeDecriptyList);
+
+  //   res.fold((l) {
+  //     showCustomError(context: context, message: 'Opss.. ${l.message}');
+  //     back();
+  //   }, (r) {
+  //     nPrint('readMultiplesQrCodes: ${r.toMap()}');
+  //     callProfile(customerProfile: r);
+  //     // subscription.cancel();
+  //   });
+  // }
 
   void back() {
     Navigator.of(context).pop();

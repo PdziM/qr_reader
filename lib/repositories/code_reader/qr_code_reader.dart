@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:read_qrcode/domain/objects/custom_exception.dart';
 
+import '../../domain/qr_code_decrypt/entities/qr_code_decrypt.dart';
 import '../code_reader.dart';
 import '../service.dart';
 
@@ -27,11 +28,17 @@ class _QrCodeReader extends CodeReader {
   }
 
   @override
-  Future<Either<CustomException, List<String>>> readMultiplesQrCodes(
+  Future<Either<CustomException, List<QrCodeDecrypt>>> readMultiplesQrCodes(
       {required ScanMode scanMode,
       String? lineColor,
       String? cancelButtonTitle,
-      bool? flashOn}) {
-    throw UnimplementedError();
+      bool? flashOn}) async {
+    final qrCodesDecrypt = await _service.readMultiplesQrCodes(
+        scanMode: ScanMode.QR,
+        lineColor: lineColor,
+        cancelButtonTitle: cancelButtonTitle,
+        flashOn: flashOn);
+
+    return qrCodesDecrypt.fold(Left.new, (r) => Right(r));
   }
 }
