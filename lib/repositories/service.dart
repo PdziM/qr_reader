@@ -31,4 +31,6 @@ abstract class CodeReaderService {
       String? lineColor,
       String? cancelButtonTitle,
       bool? flashOn});
+
+  Future<Either<Exception, bool>> stopScan();
 }

@@ -11,7 +11,7 @@ import '../service.dart';
 CodeReaderService newCodeReaderService() => _CodeReaderService();
 
 class _CodeReaderService extends CodeReaderService {
-  late StreamSubscription<dynamic> subscription;
+  late StreamSubscription<dynamic> _subscription;
   List<QrCodeDecrypt> qrCodeDecriptyList = [];
 
   bool isLoading = false;
@@ -46,7 +46,7 @@ class _CodeReaderService extends CodeReaderService {
       String? cancelButtonTitle,
       bool? flashOn}) async {
     try {
-      subscription = FlutterBarcodeScanner.getBarcodeStreamReceiver(
+      _subscription = FlutterBarcodeScanner.getBarcodeStreamReceiver(
               lineColor ?? "#ff6666",
               cancelButtonTitle ?? "Cancelar",
               flashOn ?? false,
@@ -54,17 +54,25 @@ class _CodeReaderService extends CodeReaderService {
           .listen((barcode) {
         QrCodeDecrypt qrCodeDecripty = QrCodeDecrypt.fromJson(barcode);
 
-        if (qrCodeDecriptyList.length != qrCodeDecripty.total) {
-          if (!qrCodeDecriptyList.contains(qrCodeDecripty)) {
-            qrCodeDecriptyList.add(qrCodeDecripty);
-            nPrint('BARCODE: $barcode');
-          }
+        if (!qrCodeDecriptyList.contains(qrCodeDecripty)) {
+          qrCodeDecriptyList.add(qrCodeDecripty);
+          nPrint('BARCODE: $barcode');
+        }
+
+        if (qrCodeDecriptyList.length == qrCodeDecripty.total) {
+          // stopScan();
         }
       });
       return Right(qrCodeDecriptyList);
     } catch (e) {
-      subscription.cancel();
+      _subscription.cancel();
       return Left(CustomException(message: e.toString()));
     }
+  }
+
+  @override
+  Future<Either<Exception, bool>> stopScan() async {
+    await _subscription.cancel();
+    return const Right(true);
   }
 }
